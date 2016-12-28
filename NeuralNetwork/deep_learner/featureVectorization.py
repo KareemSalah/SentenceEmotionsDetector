@@ -5,12 +5,12 @@ class FeatureVectorizer:
     angryVectors = []
     disgustVectors = []
     joyVectors = []
-    
+
     def __init__(self):
         pass
 
     def readLecixonDictionary(self):
-        with open("lexicon_dictionary.txt") as f:
+        with open("NeuralNetwork/deep_learner/lexicon_dictionary.txt") as f:
             l = f.readlines()
             for i in l:
                 l2 = i.split(' ', 1)
@@ -51,7 +51,7 @@ class FeatureVectorizer:
                 self.joyVectors.append(sentenceVector)
 
     def writeVectorsToFile(self):
-        f = open('featureVectorization.csv', 'w')
+        f = open('NeuralNetwork/deep_learner/featureVectorization.csv', 'w')
         maximumSize = max(len(self.angryVectors), len(self.disgustVectors), len(self.joyVectors))
 
         for i in range(maximumSize):
@@ -73,10 +73,10 @@ class FeatureVectorizer:
                     f.write(str(self.joyVectors[i][j]))
                     f.write(',')
                 f.write(str(self.joyVectors[i][-1])+'\n')
-    
+
     def vectorize(self, sentences):
         listOfVectors = []
-        
+
         for i in sentences:
             sentenceVector = []
 
@@ -86,17 +86,16 @@ class FeatureVectorizer:
                     for k in self.hashTable[j]:
                         sentenceVector[k] += self.hashTable[j][k]
             listOfVectors.append(sentenceVector)
-            
+
         return listOfVectors
 
     def start(self, mode='train', text=None):
         self.readLecixonDictionary()
 
         if mode == 'train':
-
-            self.readTokenFile("AngryToken.txt", 0)
-            self.readTokenFile("DisgustToken.txt", 1)
-            self.readTokenFile("joyToken.txt", 2)
+            self.readTokenFile("NeuralNetwork/deep_learner/AngryToken.txt", 0)
+            self.readTokenFile("NeuralNetwork/deep_learner/DisgustToken.txt", 1)
+            self.readTokenFile("NeuralNetwork/deep_learner/joyToken.txt", 2)
 
             self.writeVectorsToFile()
         else:
