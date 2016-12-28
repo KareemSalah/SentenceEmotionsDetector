@@ -3,14 +3,18 @@ from keras.models import model_from_json
 
 class Classifier:
     def __init__(self):
-        pass
 
-    def start(self, vectors):
+    def load_model(self):
         f = open('configs', 'r')
         conf = f.readline()
+        f.close()
         model = model_from_json(conf)
         model.load_weights('weights')
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        return model
+
+    def start(self, vectors):
+        self.load_model
 
         predictions = []
         counters = [0, 0, 0]
@@ -31,8 +35,3 @@ class Classifier:
         results['counters'] = counters
         results['total'] = total
         return results
-
-
-
-
-
