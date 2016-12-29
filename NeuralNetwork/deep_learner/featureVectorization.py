@@ -1,4 +1,5 @@
 import nltk
+from numpy import array
 
 class FeatureVectorizer:
     hashTable = {}
@@ -78,15 +79,14 @@ class FeatureVectorizer:
         listOfVectors = []
 
         for i in sentences:
-            sentenceVector = []
+            sentenceVector = [0, 0, 0]
 
             wordTokens = nltk.word_tokenize(i)
             for j in wordTokens:
                 if self.hashTable.has_key(j):
-                    for k in self.hashTable[j]:
+                    for k in range(3):
                         sentenceVector[k] += self.hashTable[j][k]
             listOfVectors.append(sentenceVector)
-
         return listOfVectors
 
     def start(self, mode='train', text=None):
@@ -99,5 +99,5 @@ class FeatureVectorizer:
 
             self.writeVectorsToFile()
         else:
-            sentences = nltk.sent_tokenize(text)
+            sentences = nltk.sent_tokenize(str(text))
             return self.vectorize(sentences)
