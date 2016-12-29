@@ -9,7 +9,7 @@ class Trainer:
         pass
 
     def start(self):
-        data_set = numpy.loadtxt("featureVectorization.csv", delimiter=",")
+        data_set = numpy.loadtxt("NeuralNetwork/deep_learner/featureVectorization.csv", delimiter=",")
         data_size = len(data_set)
 
         # Change those according to your needs
