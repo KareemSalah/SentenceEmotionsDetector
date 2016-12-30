@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Sentence Emotions Detector</title>
-  </head>
-  <body>
-    
-  </body>
+{% load static %}
+<html lang="en">
+    <head>
+        <title>Emotion Detector</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <h1 align="center" style="color:chocolate" > Welcome to Emotion Detector  </h1>
+        <div class="container">
+            <h2 align="center" style="color:chocolate" >You have 3 Emotions    </h2>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="thumbnail">
+
+                        <img src="{% static 'Home/images/disgust.png' %}" class="img-circle"  style="width:30%">
+                        <div class="caption">
+                            <p align="center">
+                                <font size="7" color="green">
+                                Disgust </font></p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <img src="{% static 'Home/images/joy.jpg' %}" class="img-circle"  style="width:30%">
+                        <div class="caption">
+                            <p align="center">
+                                <font size="7" color="yellow">
+                                Joy </font></p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail">
+
+                        <img src="{% static 'Home/images/angry.png' %}" class="img-circle"  style="width:30%">
+                        <div class="caption">
+                            <p align="center">
+                                <font size="7" color="red">
+                                Angry </font></p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="container" style="text-align: center">
+          <form name="mainform" action="predict/" class="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="sentences">Enter your text here:</label>
+            <input type="text" class="form-control" name="sentences" rows="4"></textarea>
+            <label for="textfile">Or upload a text file:</label>
+            <input type="file" name="textfile">
+            <input type="submit" id="predict" name="predict" class="btn btn-success" value="How do I feel?"></button>
+          </form>
+        </div>
+
+    </body>
 </html>
