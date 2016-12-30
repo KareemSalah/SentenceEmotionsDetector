@@ -1,6 +1,7 @@
 import nltk
 from numpy import array
 
+
 class FeatureVectorizer:
     hashTable = {}
     angryVectors = []
