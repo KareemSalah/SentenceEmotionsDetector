@@ -39,4 +39,7 @@ def predict(request):
     classifier = Classifier()
     result = classifier.start(all_sentences)
 
-    return render(request, 'predict.html', {'result': result})
+    return render(request, 'predict.html', {'result': result,
+                                            'emo0': result['counters'][0],
+                                            'emo1': result['counters'][1],
+                                            'emo2': result['counters'][2]})

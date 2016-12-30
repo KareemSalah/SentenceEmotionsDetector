@@ -16,13 +16,8 @@ class Classifier:
         return self.model
 
     def start(self, vectors):
-        print self.model
-        print 'ttttttttssssssstttttttttttttt'
         # if not self.model:
         self.load_model()
-        print '99999999999999999999999999999999999'
-        print(np.array(vectors))
-        print '99999999999999999999999999999999999'
         predictions = []
         counters = [0, 0, 0]
         for result in self.model.predict(np.array(vectors)):

@@ -1,1 +1,57 @@
-{{result}}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Results</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'Home/js/canvasjs.min.js' %}"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            var dps=[]; //dataPoints.
+            var k =[];
+            var g =[];
+            var chart = new CanvasJS.Chart("chartContainer", {
+                title: {
+                    text: "Emotions Statistics"
+                },
+                data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    dataPoints: dps
+                },]
+            });
+            dp = Number({{emo0}}); //Angry
+            kk = Number({{emo1}}); //Disgust
+            gg = Number({{emo2}}); //Joy
+            dps.push({
+              y: dp,
+              indexLabel: "Anger"
+            });
+            chart.render();
+
+            dps.push({
+              y: kk,
+              indexLabel: "Disgust"
+            });
+            chart.render();
+
+            dps.push({
+              y: gg,
+              indexLabel: "Joy"
+            });
+            chart.render();
+            console.log({{emo0}});
+            console.log({{emo1}});
+            console.log({{emo2}});
+        }
+    </script>
+  </head>
+  <body>
+    {{result}}
+    <div class="container" id="chartContainer" style="height: 270px; width: 100%;">
+    </div>
+  </body>
+</html>
