@@ -60,10 +60,10 @@
           <form name="mainform" action="predict/" class="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="sentences">Enter your text here:</label>
-            <input type="text" class="form-control" name="sentences" rows="4"></textarea>
+            <input type="text" class="form-control" name="sentences" rows="4">
             <label for="textfile">Or upload a text file:</label>
             <input type="file" name="textfile">
-            <input type="submit" id="predict" name="predict" class="btn btn-success" value="How do I feel?"></button>
+            <input type="submit" id="predict" name="predict" class="btn btn-success" value="How do I feel?">
           </form>
         </div>
 
