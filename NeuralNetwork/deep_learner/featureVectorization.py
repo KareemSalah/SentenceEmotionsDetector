@@ -32,16 +32,16 @@ class FeatureVectorizer:
 
             sentenceVector = []
             if token == 0:
-                sentenceVector = [3, 0, 0, 0]
+                sentenceVector = [0, 0, 0, 0]
             elif token == 1:
-                sentenceVector = [0, 3, 0, 1]
+                sentenceVector = [0, 0, 0, 1]
             else:
-                sentenceVector = [0, 0, 3, 2]
+                sentenceVector = [0, 0, 7, 2]
 
             wordTokens = nltk.word_tokenize(i)
             for j in wordTokens:
                 if self.hashTable.has_key(j):
-                    for k in self.hashTable[j]:
+                    for k in range(3):
                         sentenceVector[k] += self.hashTable[j][k]
 
             if token == 0:
@@ -76,6 +76,7 @@ class FeatureVectorizer:
                 f.write(str(self.joyVectors[i][-1])+'\n')
 
     def vectorize(self, sentences):
+        print sentences
         listOfVectors = []
 
         for i in sentences:
@@ -86,6 +87,7 @@ class FeatureVectorizer:
                 if self.hashTable.has_key(j):
                     for k in range(3):
                         sentenceVector[k] += self.hashTable[j][k]
+            print sentenceVector
             listOfVectors.append(sentenceVector)
         return listOfVectors
 

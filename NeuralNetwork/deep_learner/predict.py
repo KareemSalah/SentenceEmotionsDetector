@@ -21,6 +21,7 @@ class Classifier:
         predictions = []
         counters = [0, 0, 0]
         for result in self.model.predict(np.array(vectors)):
+            print result
             if result[0] > result[1] and result[0] > result[2]:
                 predictions.append(0)
                 counters[0] += 1
