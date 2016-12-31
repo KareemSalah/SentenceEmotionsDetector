@@ -1,14 +1,17 @@
+import random
 import nltk
 from numpy import array
+from nltk.stem.porter import PorterStemmer
+from nltk.stem.snowball import SnowballStemmer
+from nltk.stem.lancaster import LancasterStemmer
 
 class FeatureVectorizer:
-    hashTable = {}
-    angryVectors = []
-    disgustVectors = []
-    joyVectors = []
-
+    
     def __init__(self):
-        pass
+        self.hashTable = {}
+        self.angryVectors = []
+        self.disgustVectors = []
+        self.joyVectors = []
 
     def readLecixonDictionary(self):
         with open("NeuralNetwork/deep_learner/lexicon_dictionary.txt") as f:
@@ -32,14 +35,16 @@ class FeatureVectorizer:
 
             sentenceVector = []
             if token == 0:
-                sentenceVector = [0, 0, 0, 0]
+                sentenceVector = [2+random.uniform(0.1, 0.2), 0.1+random.uniform(0.1, 0.2), 0.1+random.uniform(0.1, 0.2), 0]
             elif token == 1:
-                sentenceVector = [0, 0, 0, 1]
+                sentenceVector = [0.1+random.uniform(0.1, 0.2), 2+random.uniform(0.1, 0.2), 0.1+random.uniform(0.1, 0.2), 1]
             else:
-                sentenceVector = [0, 0, 7, 2]
+                sentenceVector = [0.1+random.uniform(0.1, 0.2), 0.1+random.uniform(0.1, 0.2), 2+random.uniform(0.1, 0.2), 2]
 
             wordTokens = nltk.word_tokenize(i)
-            for j in wordTokens:
+            stemmer = PorterStemmer()
+            stems = [stemmer.stem(word) for word in wordTokens]
+            for j in stems:
                 if self.hashTable.has_key(j):
                     for k in range(3):
                         sentenceVector[k] += self.hashTable[j][k]
@@ -80,10 +85,12 @@ class FeatureVectorizer:
         listOfVectors = []
 
         for i in sentences:
-            sentenceVector = [0, 0, 0]
+            sentenceVector = [random.uniform(0.1, 0.2), random.uniform(0.1, 0.2), random.uniform(0.1, 0.2)]
 
             wordTokens = nltk.word_tokenize(i)
-            for j in wordTokens:
+            stemmer = PorterStemmer()
+            stems = [stemmer.stem(word) for word in wordTokens]
+            for j in stems:
                 if self.hashTable.has_key(j):
                     for k in range(3):
                         sentenceVector[k] += self.hashTable[j][k]
@@ -101,5 +108,5 @@ class FeatureVectorizer:
 
             self.writeVectorsToFile()
         else:
-            sentences = nltk.sent_tokenize(str(text))
+            sentences = nltk.sent_tokenize(text)
             return self.vectorize(sentences)

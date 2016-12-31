@@ -13,7 +13,7 @@ class Trainer:
         data_size = len(data_set)
 
         # Change those according to your needs
-        test_data_size = 200
+        test_data_size = 800
         num_features = 3
 
         # Train Set
