@@ -43,11 +43,19 @@ class FeatureVectorizer:
 
             wordTokens = nltk.word_tokenize(i)
             stemmer = PorterStemmer()
+            #stemmer = SnowballStemmer("english")
+            #stemmer = LancasterStemmer()
             stems = [stemmer.stem(word) for word in wordTokens]
             for j in stems:
+                j = j.lower()
                 if self.hashTable.has_key(j):
                     for k in range(3):
                         sentenceVector[k] += self.hashTable[j][k]
+                '''else:
+                    wordStem = stemmer.stem(j)
+                    if self.hashTable.has_key(wordStem):
+                        for k in range(3):
+                            sentenceVector[k] += self.hashTable[wordStem][k]'''
 
             if token == 0:
                 self.angryVectors.append(sentenceVector)
@@ -81,6 +89,7 @@ class FeatureVectorizer:
                 f.write(str(self.joyVectors[i][-1])+'\n')
 
     def vectorize(self, sentences):
+        print 'sentences'
         print sentences
         listOfVectors = []
 
@@ -89,11 +98,23 @@ class FeatureVectorizer:
 
             wordTokens = nltk.word_tokenize(i)
             stemmer = PorterStemmer()
+            #stemmer = SnowballStemmer("english")
+            #stemmer = LancasterStemmer()
             stems = [stemmer.stem(word) for word in wordTokens]
             for j in stems:
+                j = j.lower()
+                print j
                 if self.hashTable.has_key(j):
                     for k in range(3):
                         sentenceVector[k] += self.hashTable[j][k]
+                '''else:
+                    wordStem = stemmer.stem(j)
+                    print 'stem'
+                    print wordStem
+                    if self.hashTable.has_key(wordStem):
+                        for k in range(3):
+                            sentenceVector[k] += self.hashTable[wordStem][k]'''
+            print 'sentenceVector'
             print sentenceVector
             listOfVectors.append(sentenceVector)
         return listOfVectors
