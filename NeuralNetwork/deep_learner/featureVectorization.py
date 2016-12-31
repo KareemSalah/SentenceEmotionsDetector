@@ -102,11 +102,16 @@ class FeatureVectorizer:
             #stemmer = LancasterStemmer()
             stems = [stemmer.stem(word) for word in wordTokens]
             for j in stems:
-                j = j.lower()
-                print j
-                if self.hashTable.has_key(j):
+                jj = j.lower()
+                if jj[-1] == 'i': #The stemmer strangely changes every word ending in 'y' to end with 'i' which is not usual in English
+                    jj = list(jj)
+                    jj[-1] = 'y'
+                    jj = ''.join(jj)
+
+                print jj
+                if self.hashTable.has_key(jj):
                     for k in range(3):
-                        sentenceVector[k] += self.hashTable[j][k]
+                        sentenceVector[k] += self.hashTable[jj][k]
                 '''else:
                     wordStem = stemmer.stem(j)
                     print 'stem'
