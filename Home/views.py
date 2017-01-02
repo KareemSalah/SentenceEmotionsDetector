@@ -20,7 +20,7 @@ def predict(request):
         return HttpResponse("NO DATA FOUND!")
     sentences = request.POST['sentences']
     if 'textfile' not in request.POST:
-        textfile = request.FILES['textfile'].read()
+        textfile = request.FILES['textfile'].read().decode('utf-8')
     else:
         textfile = []
 

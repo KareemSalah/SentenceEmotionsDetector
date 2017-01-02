@@ -2,6 +2,8 @@ from keras.models import Sequential, model_from_json
 from keras.layers import Dense
 from keras.utils.np_utils import to_categorical
 import numpy
+import tensorflow as tf
+from keras import backend as K
 
 
 class Trainer:
@@ -9,11 +11,14 @@ class Trainer:
         pass
 
     def start(self):
+        tf_session = tf.Session()
+        K.set_session(tf_session)
+
         data_set = numpy.loadtxt("NeuralNetwork/deep_learner/featureVectorization.csv", delimiter=",")
         data_size = len(data_set)
 
         # Change those according to your needs
-        test_data_size = 200
+        test_data_size = 800
         num_features = 3
 
         # Train Set
@@ -46,8 +51,9 @@ class Trainer:
         model_configs = model.to_json()
 
         # ===================== Training The Model ===========================
-        model.fit(inp_vec, output_vec_categorical, nb_epoch=10, batch_size=10)
-        model_weights = model.get_weights()
+        with tf_session.as_default():
+            model.fit(inp_vec, output_vec_categorical, nb_epoch=10, batch_size=10)
+            model_weights = model.get_weights()
 
         # ===================== Saving model configs and weights =============
         fc = open('configs', 'w')
@@ -55,6 +61,10 @@ class Trainer:
         model.save_weights('weights')
 
         # ===================== Evaluating Model =============================
-        scores = model.evaluate(test_inp_vec, test_output_vec_categorical)
+        scores = None
+        with tf_session.as_default():
+            scores = model.evaluate(test_inp_vec, test_output_vec_categorical)
+        K.clear_session()
+        
         print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
         return scores[1]*100.0
