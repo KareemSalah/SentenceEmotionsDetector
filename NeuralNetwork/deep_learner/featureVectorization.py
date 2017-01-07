@@ -45,17 +45,21 @@ class FeatureVectorizer:
             stemmer = PorterStemmer()
             #stemmer = SnowballStemmer("english")
             #stemmer = LancasterStemmer()
-            stems = [stemmer.stem(word) for word in wordTokens]
-            for j in stems:
-                j = j.lower()
-                if self.hashTable.has_key(j):
+            #stems = [stemmer.stem(word) for word in wordTokens]
+            for j in wordTokens:
+                jj = j.lower()
+                if self.hashTable.has_key(jj):
                     for k in range(3):
-                        sentenceVector[k] += self.hashTable[j][k]
-                '''else:
-                    wordStem = stemmer.stem(j)
+                        sentenceVector[k] += self.hashTable[jj][k]
+                else:
+                    wordStem = stemmer.stem(jj)
+                    if wordStem[-1] == 'i': #The stemmer strangely changes every word ending in 'y' to end with 'i' which is not usual in English
+                        wordStem = list(wordStem)
+                        wordStem[-1] = 'y'
+                        wordStem = ''.join(wordStem)
                     if self.hashTable.has_key(wordStem):
                         for k in range(3):
-                            sentenceVector[k] += self.hashTable[wordStem][k]'''
+                            sentenceVector[k] += self.hashTable[wordStem][k]
 
             if token == 0:
                 self.angryVectors.append(sentenceVector)
@@ -89,8 +93,8 @@ class FeatureVectorizer:
                 f.write(str(self.joyVectors[i][-1])+'\n')
 
     def vectorize(self, sentences):
-        print 'sentences'
-        print sentences
+        #print 'sentences'
+        #print sentences
         listOfVectors = []
 
         for i in sentences:
@@ -100,27 +104,26 @@ class FeatureVectorizer:
             stemmer = PorterStemmer()
             #stemmer = SnowballStemmer("english")
             #stemmer = LancasterStemmer()
-            stems = [stemmer.stem(word) for word in wordTokens]
-            for j in stems:
+            #stems = [stemmer.stem(word) for word in wordTokens]
+            for j in wordTokens:
                 jj = j.lower()
-                if jj[-1] == 'i': #The stemmer strangely changes every word ending in 'y' to end with 'i' which is not usual in English
-                    jj = list(jj)
-                    jj[-1] = 'y'
-                    jj = ''.join(jj)
-
-                print jj
+                #print jj
                 if self.hashTable.has_key(jj):
                     for k in range(3):
                         sentenceVector[k] += self.hashTable[jj][k]
-                '''else:
-                    wordStem = stemmer.stem(j)
-                    print 'stem'
-                    print wordStem
+                else:
+                    wordStem = stemmer.stem(jj)
+                    if wordStem[-1] == 'i': #The stemmer strangely changes every word ending in 'y' to end with 'i' which is not usual in English
+                        wordStem = list(wordStem)
+                        wordStem[-1] = 'y'
+                        wordStem = ''.join(wordStem)
+                    #print 'stem'
+                    #print wordStem
                     if self.hashTable.has_key(wordStem):
                         for k in range(3):
-                            sentenceVector[k] += self.hashTable[wordStem][k]'''
-            print 'sentenceVector'
-            print sentenceVector
+                            sentenceVector[k] += self.hashTable[wordStem][k]
+            #print 'sentenceVector'
+            #print sentenceVector
             listOfVectors.append(sentenceVector)
         return listOfVectors
 
